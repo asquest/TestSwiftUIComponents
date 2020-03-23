@@ -15,8 +15,8 @@
 ## About App
 
 The TestSwiftUICompnents is a app that uses Swift UI and Combine to load the UI. It fetches data from a url and load data into a List. It loads images lazily and keeps the app as fluid as possible. On tap of a List item the user navigates to the details screen where a image or video is shown.
-The app should have functionality of sharing content through mail or sms or chat messengers.
-The app basically consists of two screens.
+The app should have functionality of sharing content through mail or sms or chat messengers. There will be a sorting mechanism to sort data by name or date.
+The app basically consists of two screens. Summary screen and detail screen.
 
 ## Features
 

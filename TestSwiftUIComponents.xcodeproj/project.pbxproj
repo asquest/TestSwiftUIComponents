@@ -20,6 +20,9 @@
 		608E16A9242A25CC00610F86 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608E16A8242A25CC00610F86 /* DataModel.swift */; };
 		608E16AB242A25F300610F86 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 608E16AA242A25F200610F86 /* data.json */; };
 		608E16AD242A45F500610F86 /* placeholder-square.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 608E16AC242A45F500610F86 /* placeholder-square.jpg */; };
+		60BE8690242CAEE600A19CDC /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BE868F242CAEE600A19CDC /* ImageCache.swift */; };
+		60BE8692242CBD5800A19CDC /* ListDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BE8691242CBD5800A19CDC /* ListDetail.swift */; };
+		60BE8694242CDBE400A19CDC /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BE8693242CDBE400A19CDC /* ShareSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		608E16A8242A25CC00610F86 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		608E16AA242A25F200610F86 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		608E16AC242A45F500610F86 /* placeholder-square.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "placeholder-square.jpg"; sourceTree = SOURCE_ROOT; };
+		60BE868F242CAEE600A19CDC /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		60BE8691242CBD5800A19CDC /* ListDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetail.swift; sourceTree = "<group>"; };
+		60BE8693242CDBE400A19CDC /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,9 @@
 				6058E7CE2428F27700DE6F5D /* TestSwiftUIComponents.xcdatamodeld */,
 				6058E7D52428F27900DE6F5D /* Preview Content */,
 				608E16A6242A1F4100610F86 /* AsyncImage.swift */,
+				60BE868F242CAEE600A19CDC /* ImageCache.swift */,
+				60BE8691242CBD5800A19CDC /* ListDetail.swift */,
+				60BE8693242CDBE400A19CDC /* ShareSheet.swift */,
 			);
 			path = TestSwiftUIComponents;
 			sourceTree = "<group>";
@@ -229,7 +238,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				608E16A9242A25CC00610F86 /* DataModel.swift in Sources */,
+				60BE8694242CDBE400A19CDC /* ShareSheet.swift in Sources */,
+				60BE8692242CBD5800A19CDC /* ListDetail.swift in Sources */,
 				608E16A5242A105E00610F86 /* ListItem.swift in Sources */,
+				60BE8690242CAEE600A19CDC /* ImageCache.swift in Sources */,
 				6058E7D02428F27700DE6F5D /* TestSwiftUIComponents.xcdatamodeld in Sources */,
 				6058E7CB2428F27700DE6F5D /* AppDelegate.swift in Sources */,
 				6058E7D22428F27700DE6F5D /* ContentView.swift in Sources */,

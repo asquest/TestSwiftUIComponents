@@ -9,11 +9,24 @@
 import SwiftUI
 
 struct ListItem: View {
-    var model: Model?
+    private var model: Model?
+    var url: URL
+    var cache: ImageCache
+    
+    init(model: Model? = nil, cache: ImageCache) {
+        if let imageHref = model?.image, let url = URL(string: imageHref) {
+            self.url = url
+        } else {
+            self.url = Bundle.main.url(forResource: "placeholder-square", withExtension: "jpg")!
+        }
+        self.model = model
+        self.cache = cache
+    }
+    
     var body: some View {
         HStack {
             VStack {
-                AsyncImage(urlString: model?.image, placeholder: Image("placeholder-square").resizable().frame(width: 50.0, height: 50.0, alignment: .top))
+                AsyncImage(url: url, placeholder: Image("placeholder-square").resizable(), cache: cache).frame(width: 75.0, height: 75.0, alignment: .topLeading).aspectRatio(1, contentMode: .fit)
             }
             VStack(alignment: .leading) {
                 Text(model?.title ?? "").fontWeight(.medium)
@@ -25,6 +38,6 @@ struct ListItem: View {
 
 struct ListItem_Previews: PreviewProvider {
     static var previews: some View {
-        ListItem()
+        ListItem(cache: TemporaryImageCache())
     }
 }

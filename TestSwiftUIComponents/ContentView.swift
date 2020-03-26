@@ -11,6 +11,7 @@ import Combine
 
 struct ContentView: View {
     @ObservedObject private var dataLoader: DataLoader
+    let cache = TemporaryImageCache()
     var url: URL = Bundle.main.url(forResource: "data", withExtension: "json")!
     
     init() {
@@ -23,9 +24,13 @@ struct ContentView: View {
     }
     
     private var list: some View {
-        VStack {
-            List(dataLoader.dataModel?.data ?? [], id: \.self) { model in
-                    ListItem(model: model)
+        NavigationView {
+            VStack {
+                List(dataLoader.dataModel?.data ?? [], id: \.self) { model in
+                    NavigationLink(destination: ListDetail(model: model, cache: self.cache)) {
+                        ListItem(model: model, cache: self.cache)
+                    }
+                }.navigationBarTitle(dataLoader.dataModel?.title ?? "")
             }
         }
     }

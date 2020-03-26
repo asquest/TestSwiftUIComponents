@@ -14,14 +14,8 @@ struct AsyncImage<Placeholder: View>: View {
     @ObservedObject private var loader: ImageLoader
     private let placeholder: Placeholder?
     
-    init(urlString: String?, placeholder: Placeholder? = nil) {
-        if let string = urlString, let url = URL(string: string) {
-            loader = ImageLoader(url: url)
-        } else {
-            let url = Bundle.main.url(forResource: "placeholder-square", withExtension: "jpg")!
-            loader = ImageLoader(url: url)
-        }
-        
+    init(url: URL, placeholder: Placeholder? = nil, cache: ImageCache? = nil) {
+        loader = ImageLoader(url: url, cache: cache)
         self.placeholder = placeholder
     }
 
@@ -35,7 +29,6 @@ struct AsyncImage<Placeholder: View>: View {
          Group {
             if loader.image != nil {
                 Image(uiImage: loader.image!).resizable()
-                    .frame(width: 50.0, height: 50.0, alignment: .topLeading)
             } else {
                 placeholder
             }
@@ -45,28 +38,56 @@ struct AsyncImage<Placeholder: View>: View {
 
 struct AsyncImage_Previews: PreviewProvider {
     static var previews: some View {
-        AsyncImage(urlString: Bundle.main.path(forResource: "placeholder-square", ofType: "jpg")!, placeholder: Text("Load"))
+        AsyncImage(url: Bundle.main.url(forResource: "placeholder-square", withExtension: "jpg")!, placeholder: Text("Load"))
     }
 }
 
 class ImageLoader: ObservableObject {
     @Published var image: UIImage? = nil
+    
     private let url: URL
+    private var cache: ImageCache?
+    
     private var cancellable: AnyCancellable?
+    
+    private(set) var isLoading = false
+    private static let imageProcessingQueue = DispatchQueue(label: "image-processing")
 
-    init(url: URL) {
+    init(url: URL, cache: ImageCache? = nil) {
         self.url = url
+        self.cache = cache
     }
     
     func load() {
+        guard !isLoading else { return }
+        
+        if let image = cache?[url] {
+            self.image = image
+            return
+        }
+        
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: Self.imageProcessingQueue)
             .map { UIImage(data: $0.data) }
             .replaceError(with: nil)
+            .handleEvents(receiveSubscription: { [unowned self] _ in self.onStart() },
+                          receiveOutput: { [unowned self] in self.cache?[self.url] = $0 },
+                          receiveCompletion: { [unowned self] _ in self.onFinish() },
+                          receiveCancel: { [unowned self] in self.onFinish() })
             .receive(on: DispatchQueue.main)
             .assign(to: \.image, on: self)
     }
 
+    private func onStart() {
+        isLoading = true
+    }
+    
+    private func onFinish() {
+        isLoading = false
+    }
+    
     func cancel() {
         cancellable?.cancel()
     }
 }
+
